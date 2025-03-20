@@ -290,7 +290,7 @@ pub fn save_bookmarked_patchsets(
     Ok(())
 }
 
-pub fn load_bookmarked_patchsets(filepath: &str) -> io::Result<Vec<Patch>> {
+pub fn get_local_bookmarked_patchsets(filepath: &str) -> io::Result<Vec<Patch>> {
     let bookmarked_patchsets_file = File::open(filepath)?;
     let bookmarked_patchesets = serde_json::from_reader(bookmarked_patchsets_file)?;
     Ok(bookmarked_patchesets)
@@ -375,7 +375,7 @@ pub fn save_available_lists(available_lists: &Vec<MailingList>, filepath: &str) 
     Ok(())
 }
 
-pub fn load_available_lists(filepath: &str) -> io::Result<Vec<MailingList>> {
+pub fn get_local_mailing_lists(filepath: &str) -> io::Result<Vec<MailingList>> {
     let available_lists_file = File::open(filepath)?;
     let available_lists = serde_json::from_reader(available_lists_file)?;
     Ok(available_lists)
@@ -534,7 +534,7 @@ pub fn save_reviewed_patchsets(
     Ok(())
 }
 
-pub fn load_reviewed_patchsets(filepath: &str) -> io::Result<HashMap<String, HashSet<usize>>> {
+pub fn get_local_reviewed_patchsets(filepath: &str) -> io::Result<HashMap<String, HashSet<usize>>> {
     let reviewed_patchsets_file = File::open(filepath)?;
     let reviewed_patchsets = serde_json::from_reader(reviewed_patchsets_file)?;
     Ok(reviewed_patchsets)

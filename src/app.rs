@@ -70,14 +70,14 @@ impl App {
         config.create_dirs();
 
         let mailing_lists =
-            lore_session::load_available_lists(config.mailing_lists_path()).unwrap_or_default();
+            lore_session::get_local_mailing_lists(config.mailing_lists_path()).unwrap_or_default();
 
         let bookmarked_patchsets =
-            lore_session::load_bookmarked_patchsets(config.bookmarked_patchsets_path())
+            lore_session::get_local_bookmarked_patchsets(config.bookmarked_patchsets_path())
                 .unwrap_or_default();
 
         let reviewed_patchsets =
-            lore_session::load_reviewed_patchsets(config.reviewed_patchsets_path())
+            lore_session::get_local_reviewed_patchsets(config.reviewed_patchsets_path())
                 .unwrap_or_default();
 
         let lore_api_client = BlockingLoreAPIClient::default();
