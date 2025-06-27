@@ -7,13 +7,13 @@ use ratatui::{
 use std::ops::ControlFlow;
 
 use crate::{
-    app::{screens::CurrentScreen, App},
     loading_screen,
+    model::{screens::CurrentScreen, Model},
     ui::popup::{help::HelpPopUpBuilder, PopUp},
 };
 
 pub fn handle_mailing_list_selection<B>(
-    app: &mut App,
+    model: &mut Model,
     key: KeyEvent,
     mut terminal: Terminal<B>,
 ) -> color_eyre::Result<ControlFlow<(), Terminal<B>>>
@@ -23,12 +23,12 @@ where
     match key.code {
         KeyCode::Char('?') => {
             let popup = generate_help_popup();
-            app.popup = Some(popup);
+            model.popup = Some(popup);
         }
         KeyCode::Enter => {
-            if app.mailing_list_selection.has_valid_target_list() {
-                app.init_latest_patchsets();
-                let list_name = app
+            if model.mailing_list_selection.has_valid_target_list() {
+                model.init_latest_patchsets();
+                let list_name = model
                     .latest_patchsets
                     .as_ref()
                     .unwrap()
@@ -39,11 +39,11 @@ where
                     terminal,
                     format!("Fetching patchsets from {}", list_name) => {
                         let result =
-                        app.latest_patchsets.as_mut().unwrap()
+                        model.latest_patchsets.as_mut().unwrap()
                         .fetch_current_page();
                         if result.is_ok() {
-                            app.mailing_list_selection.clear_target_list();
-                            app.set_current_screen(CurrentScreen::LatestPatchsets);
+                            model.mailing_list_selection.clear_target_list();
+                            model.set_current_screen(CurrentScreen::LatestPatchsets);
                         }
                         result
                     }
@@ -54,35 +54,35 @@ where
             terminal = loading_screen! {
                 terminal,
                 "Refreshing lists" => {
-                    app.mailing_list_selection
+                    model.mailing_list_selection
                         .refresh_available_mailing_lists()
                 }
             };
         }
         KeyCode::F(2) => {
-            app.init_edit_config();
-            app.set_current_screen(CurrentScreen::EditConfig);
+            model.init_edit_config();
+            model.set_current_screen(CurrentScreen::EditConfig);
         }
         KeyCode::F(1) => {
-            if !app.bookmarked_patchsets.bookmarked_patchsets.is_empty() {
-                app.mailing_list_selection.clear_target_list();
-                app.set_current_screen(CurrentScreen::BookmarkedPatchsets);
+            if !model.bookmarked_patchsets.bookmarked_patchsets.is_empty() {
+                model.mailing_list_selection.clear_target_list();
+                model.set_current_screen(CurrentScreen::BookmarkedPatchsets);
             }
         }
         KeyCode::Backspace => {
-            app.mailing_list_selection.remove_last_target_list_char();
+            model.mailing_list_selection.remove_last_target_list_char();
         }
         KeyCode::Esc => {
             return Ok(ControlFlow::Break(()));
         }
         KeyCode::Char(ch) => {
-            app.mailing_list_selection.push_char_to_target_list(ch);
+            model.mailing_list_selection.push_char_to_target_list(ch);
         }
         KeyCode::Down => {
-            app.mailing_list_selection.highlight_below_list();
+            model.mailing_list_selection.highlight_below_list();
         }
         KeyCode::Up => {
-            app.mailing_list_selection.highlight_above_list();
+            model.mailing_list_selection.highlight_above_list();
         }
         _ => {}
     }

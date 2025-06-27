@@ -8,12 +8,12 @@ use std::{
 };
 
 use crate::{
-    app::config::{Config, KernelTree},
     lore::{
         lore_api_client::BlockingLoreAPIClient,
         lore_session,
         patch::{Author, Patch},
     },
+    model::config::{Config, KernelTree},
 };
 
 use super::CurrentScreen;

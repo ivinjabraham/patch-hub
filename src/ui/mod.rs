@@ -15,9 +15,9 @@ use ratatui::{
     Frame,
 };
 
-use crate::app::{screens::CurrentScreen, App};
+use crate::model::{screens::CurrentScreen, Model};
 
-pub fn draw_ui(f: &mut Frame, app: &App) {
+pub fn draw_ui(f: &mut Frame, model: &Model) {
     // Clear the whole screen for sanitizing reasons
     f.render_widget(Clear, f.area());
 
@@ -32,19 +32,19 @@ pub fn draw_ui(f: &mut Frame, app: &App) {
 
     render_title(f, chunks[0]);
 
-    match app.current_screen {
-        CurrentScreen::MailingListSelection => mail_list::render_main(f, app, chunks[1]),
+    match model.current_screen {
+        CurrentScreen::MailingListSelection => mail_list::render_main(f, model, chunks[1]),
         CurrentScreen::BookmarkedPatchsets => {
-            bookmarked::render_main(f, &app.bookmarked_patchsets, chunks[1])
+            bookmarked::render_main(f, &model.bookmarked_patchsets, chunks[1])
         }
-        CurrentScreen::LatestPatchsets => latest::render_main(f, app, chunks[1]),
-        CurrentScreen::PatchsetDetails => details_actions::render_main(f, app, chunks[1]),
-        CurrentScreen::EditConfig => edit_config::render_main(f, app, chunks[1]),
+        CurrentScreen::LatestPatchsets => latest::render_main(f, model, chunks[1]),
+        CurrentScreen::PatchsetDetails => details_actions::render_main(f, model, chunks[1]),
+        CurrentScreen::EditConfig => edit_config::render_main(f, model, chunks[1]),
     }
 
-    navigation_bar::render(f, app, chunks[2]);
+    navigation_bar::render(f, model, chunks[2]);
 
-    app.popup.as_ref().inspect(|p| {
+    model.popup.as_ref().inspect(|p| {
         let (x, y) = p.dimensions();
         let rect = centered_rect(x, y, f.area());
         p.render(f, rect);

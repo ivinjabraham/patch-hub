@@ -6,7 +6,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::app::screens::bookmarked::BookmarkedPatchsets;
+use crate::model::screens::bookmarked::BookmarkedPatchsets;
 
 pub fn render_main(f: &mut Frame, bookmarked_patchsets: &BookmarkedPatchsets, chunk: Rect) {
     let patchset_index = bookmarked_patchsets.patchset_index;

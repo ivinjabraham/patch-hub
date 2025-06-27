@@ -6,13 +6,13 @@ use ratatui::{
     Frame,
 };
 
-use crate::app::App;
+use crate::model::Model;
 
-pub fn render_main(f: &mut Frame, app: &App, chunk: Rect) {
-    let highlighted_list_index = app.mailing_list_selection.highlighted_list_index;
+pub fn render_main(f: &mut Frame, model: &Model, chunk: Rect) {
+    let highlighted_list_index = model.mailing_list_selection.highlighted_list_index;
     let mut list_items = Vec::<ListItem>::new();
 
-    for mailing_list in &app.mailing_list_selection.possible_mailing_lists {
+    for mailing_list in &model.mailing_list_selection.possible_mailing_lists {
         list_items.push(ListItem::new(
             Line::from(vec![
                 Span::styled(
@@ -50,35 +50,35 @@ pub fn render_main(f: &mut Frame, app: &App, chunk: Rect) {
     f.render_stateful_widget(list, chunk, &mut list_state);
 }
 
-pub fn mode_footer_text(app: &App) -> Vec<Span> {
+pub fn mode_footer_text(model: &Model) -> Vec<Span> {
     let mut text_area = Span::default();
 
-    if app.mailing_list_selection.target_list.is_empty() {
+    if model.mailing_list_selection.target_list.is_empty() {
         text_area = Span::styled("type the target list", Style::default().fg(Color::DarkGray))
     } else {
-        for mailing_list in &app.mailing_list_selection.mailing_lists {
+        for mailing_list in &model.mailing_list_selection.mailing_lists {
             if mailing_list
                 .name()
-                .eq(&app.mailing_list_selection.target_list)
+                .eq(&model.mailing_list_selection.target_list)
             {
                 text_area = Span::styled(
-                    &app.mailing_list_selection.target_list,
+                    &model.mailing_list_selection.target_list,
                     Style::default().fg(Color::Green),
                 );
                 break;
             } else if mailing_list
                 .name()
-                .starts_with(&app.mailing_list_selection.target_list)
+                .starts_with(&model.mailing_list_selection.target_list)
             {
                 text_area = Span::styled(
-                    &app.mailing_list_selection.target_list,
+                    &model.mailing_list_selection.target_list,
                     Style::default().fg(Color::LightCyan),
                 );
             }
         }
         if text_area.content.is_empty() {
             text_area = Span::styled(
-                &app.mailing_list_selection.target_list,
+                &model.mailing_list_selection.target_list,
                 Style::default().fg(Color::Red),
             );
         }

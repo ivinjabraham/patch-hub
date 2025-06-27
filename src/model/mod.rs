@@ -34,7 +34,7 @@ use screens::{
 
 /// Type that represents the overall state of the application. It can be viewed
 /// as the **Model** component of `patch-hub`.
-pub struct App {
+pub struct Model {
     /// The current active screen
     pub current_screen: CurrentScreen,
     /// Screen to navigate and select the mailing lists archived on Lore
@@ -56,7 +56,7 @@ pub struct App {
     pub popup: Option<Box<dyn PopUp>>,
 }
 
-impl App {
+impl Model {
     /// Creates a new instance of `App`. It dynamically loads configurations
     /// based on precedence (see [crate::app::Config::build]), app data
     /// (available mailing lists, bookmarked patchsets, reviewed patchsets), and
@@ -84,7 +84,7 @@ impl App {
         Logger::info("patch-hub started");
         garbage_collector::collect_garbage(&config);
 
-        Ok(App {
+        Ok(Model {
             current_screen: CurrentScreen::MailingListSelection,
             mailing_list_selection: MailingListSelection {
                 mailing_lists: mailing_lists.clone(),
