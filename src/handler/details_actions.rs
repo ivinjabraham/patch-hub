@@ -8,7 +8,7 @@ use std::time::Duration;
 
 use crate::{
     infrastructure::terminal::{setup_user_io, teardown_user_io},
-    model::{screens::CurrentScreen, Model},
+    model::{screens::View, Model},
     ui::popup::{help::HelpPopUpBuilder, review_trailers::ReviewTrailersPopUp, PopUp},
 };
 
@@ -122,7 +122,7 @@ pub fn handle_patchset_details<B: Backend>(
             } else {
                 model.consolidate_patchset_actions()?;
             }
-            model.set_current_screen(CurrentScreen::PatchsetDetails);
+            model.set_current_screen(View::PatchsetDetails);
         }
         _ => {}
     }

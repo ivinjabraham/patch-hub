@@ -5,17 +5,17 @@ use ratatui::{
     Frame,
 };
 
-use crate::model::{screens::CurrentScreen, Model};
+use crate::model::{screens::View, Model};
 
 use super::{bookmarked, details_actions, edit_config, latest, mail_list};
 
 pub fn render(f: &mut Frame, model: &Model, chunk: Rect) {
     let mode_footer_text = match model.current_screen {
-        CurrentScreen::MailingListSelection => mail_list::mode_footer_text(model),
-        CurrentScreen::BookmarkedPatchsets => bookmarked::mode_footer_text(),
-        CurrentScreen::LatestPatchsets => latest::mode_footer_text(model),
-        CurrentScreen::PatchsetDetails => details_actions::mode_footer_text(),
-        CurrentScreen::EditConfig => edit_config::mode_footer_text(model),
+        View::MailingListSelection => mail_list::mode_footer_text(model),
+        View::BookmarkedPatchsets => bookmarked::mode_footer_text(),
+        View::LatestPatchsets => latest::mode_footer_text(model),
+        View::PatchsetDetails => details_actions::mode_footer_text(),
+        View::EditConfig => edit_config::mode_footer_text(model),
     };
     let mode_footer = Paragraph::new(Line::from(mode_footer_text))
         .block(Block::default().borders(Borders::ALL))
@@ -23,11 +23,11 @@ pub fn render(f: &mut Frame, model: &Model, chunk: Rect) {
 
     let current_keys_hint = {
         match model.current_screen {
-            CurrentScreen::MailingListSelection => mail_list::keys_hint(),
-            CurrentScreen::BookmarkedPatchsets => bookmarked::keys_hint(),
-            CurrentScreen::LatestPatchsets => latest::keys_hint(),
-            CurrentScreen::PatchsetDetails => details_actions::keys_hint(),
-            CurrentScreen::EditConfig => edit_config::keys_hint(model),
+            View::MailingListSelection => mail_list::keys_hint(),
+            View::BookmarkedPatchsets => bookmarked::keys_hint(),
+            View::LatestPatchsets => latest::keys_hint(),
+            View::PatchsetDetails => details_actions::keys_hint(),
+            View::EditConfig => edit_config::keys_hint(model),
         }
     };
 

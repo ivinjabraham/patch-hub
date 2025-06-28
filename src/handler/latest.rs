@@ -9,7 +9,7 @@ use std::ops::ControlFlow;
 use crate::{
     loading_screen,
     lore::lore_session::B4Result,
-    model::{screens::CurrentScreen, Model},
+    model::{screens::View, Model},
     ui::popup::{help::HelpPopUpBuilder, info_popup::InfoPopUp, PopUp},
 };
 
@@ -30,7 +30,7 @@ where
         }
         KeyCode::Esc | KeyCode::Char('q') => {
             model.reset_latest_patchsets();
-            model.set_current_screen(CurrentScreen::MailingListSelection);
+            model.set_current_screen(View::MailingListSelection);
         }
         KeyCode::Char('j') | KeyCode::Down => {
             latest_patchsets.select_below_patchset();
@@ -59,13 +59,13 @@ where
                     if result.is_ok() {
                         match result.unwrap() {
                             B4Result::PatchFound(_) => {
-                                model.set_current_screen(CurrentScreen::PatchsetDetails);
+                                model.set_current_screen(View::PatchsetDetails);
                             }
                             B4Result::PatchNotFound(err_cause) => {
                                 model.popup = Some(InfoPopUp::generate_info_popup(
                                     "Error",&format!("The selected patchset couldn't be retrieved.\nReason: {err_cause}\nPlease choose another patchset.")
                                 ));
-                                model.set_current_screen(CurrentScreen::LatestPatchsets);
+                                model.set_current_screen(View::LatestPatchsets);
                             }
                         }
                     }

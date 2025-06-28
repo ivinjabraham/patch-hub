@@ -5,7 +5,7 @@ pub mod latest;
 pub mod mail_list;
 
 #[derive(Debug, Clone, PartialEq)]
-pub enum CurrentScreen {
+pub enum View {
     MailingListSelection,
     BookmarkedPatchsets,
     LatestPatchsets,

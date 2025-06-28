@@ -8,7 +8,7 @@ use std::ops::ControlFlow;
 
 use crate::{
     loading_screen,
-    model::{screens::CurrentScreen, Model},
+    model::{screens::View, Model},
     ui::popup::{help::HelpPopUpBuilder, PopUp},
 };
 
@@ -43,7 +43,7 @@ where
                         .fetch_current_page();
                         if result.is_ok() {
                             model.mailing_list_selection.clear_target_list();
-                            model.set_current_screen(CurrentScreen::LatestPatchsets);
+                            model.set_current_screen(View::LatestPatchsets);
                         }
                         result
                     }
@@ -61,12 +61,12 @@ where
         }
         KeyCode::F(2) => {
             model.init_edit_config();
-            model.set_current_screen(CurrentScreen::EditConfig);
+            model.set_current_screen(View::EditConfig);
         }
         KeyCode::F(1) => {
             if !model.bookmarked_patchsets.bookmarked_patchsets.is_empty() {
                 model.mailing_list_selection.clear_target_list();
-                model.set_current_screen(CurrentScreen::BookmarkedPatchsets);
+                model.set_current_screen(View::BookmarkedPatchsets);
             }
         }
         KeyCode::Backspace => {

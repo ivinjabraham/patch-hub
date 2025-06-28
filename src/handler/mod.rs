@@ -17,7 +17,7 @@ use std::{
 
 use crate::{
     loading_screen,
-    model::{screens::CurrentScreen, Model},
+    model::{screens::View, Model},
     ui::draw_ui,
 };
 
@@ -43,19 +43,19 @@ where
         }
     } else {
         match model.current_screen {
-            CurrentScreen::MailingListSelection => {
+            View::MailingListSelection => {
                 return handle_mailing_list_selection(model, key, terminal);
             }
-            CurrentScreen::BookmarkedPatchsets => {
+            View::BookmarkedPatchsets => {
                 return handle_bookmarked_patchsets(model, key, terminal);
             }
-            CurrentScreen::PatchsetDetails => {
+            View::PatchsetDetails => {
                 handle_patchset_details(model, key, &mut terminal)?;
             }
-            CurrentScreen::EditConfig => {
+            View::EditConfig => {
                 handle_edit_config(model, key)?;
             }
-            CurrentScreen::LatestPatchsets => {
+            View::LatestPatchsets => {
                 return handle_latest_patchsets(model, key, terminal);
             }
         }
@@ -71,7 +71,7 @@ where
     B: Backend + Send + 'static,
 {
     match model.current_screen {
-        CurrentScreen::MailingListSelection => {
+        View::MailingListSelection => {
             if model.mailing_list_selection.mailing_lists.is_empty() {
                 terminal = loading_screen! {
                     terminal, "Fetching mailing lists" => {
@@ -80,7 +80,7 @@ where
                 };
             }
         }
-        CurrentScreen::LatestPatchsets => {
+        View::LatestPatchsets => {
             let patchsets_state = model.latest_patchsets.as_mut().unwrap();
             let target_list = patchsets_state.target_list().to_string();
             if patchsets_state.processed_patchsets_count() == 0 {
@@ -94,9 +94,9 @@ where
                 model.mailing_list_selection.clear_target_list();
             }
         }
-        CurrentScreen::BookmarkedPatchsets => {
+        View::BookmarkedPatchsets => {
             if model.bookmarked_patchsets.bookmarked_patchsets.is_empty() {
-                model.set_current_screen(CurrentScreen::MailingListSelection);
+                model.set_current_screen(View::MailingListSelection);
             }
         }
         _ => {}

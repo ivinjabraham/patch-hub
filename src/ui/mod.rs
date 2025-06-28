@@ -15,7 +15,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::model::{screens::CurrentScreen, Model};
+use crate::model::{screens::View, Model};
 
 pub fn draw_ui(f: &mut Frame, model: &Model) {
     // Clear the whole screen for sanitizing reasons
@@ -33,13 +33,13 @@ pub fn draw_ui(f: &mut Frame, model: &Model) {
     render_title(f, chunks[0]);
 
     match model.current_screen {
-        CurrentScreen::MailingListSelection => mail_list::render_main(f, model, chunks[1]),
-        CurrentScreen::BookmarkedPatchsets => {
+        View::MailingListSelection => mail_list::render_main(f, model, chunks[1]),
+        View::BookmarkedPatchsets => {
             bookmarked::render_main(f, &model.bookmarked_patchsets, chunks[1])
         }
-        CurrentScreen::LatestPatchsets => latest::render_main(f, model, chunks[1]),
-        CurrentScreen::PatchsetDetails => details_actions::render_main(f, model, chunks[1]),
-        CurrentScreen::EditConfig => edit_config::render_main(f, model, chunks[1]),
+        View::LatestPatchsets => latest::render_main(f, model, chunks[1]),
+        View::PatchsetDetails => details_actions::render_main(f, model, chunks[1]),
+        View::EditConfig => edit_config::render_main(f, model, chunks[1]),
     }
 
     navigation_bar::render(f, model, chunks[2]);

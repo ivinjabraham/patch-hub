@@ -29,14 +29,14 @@ use screens::{
     edit_config::EditConfig,
     latest::LatestPatchsets,
     mail_list::MailingListSelection,
-    CurrentScreen,
+    View,
 };
 
 /// Type that represents the overall state of the application. It can be viewed
 /// as the **Model** component of `patch-hub`.
 pub struct Model {
     /// The current active screen
-    pub current_screen: CurrentScreen,
+    pub current_screen: View,
     /// Screen to navigate and select the mailing lists archived on Lore
     pub mailing_list_selection: MailingListSelection,
     /// Screen with listing patchsets that were previously bookmarked
@@ -85,7 +85,7 @@ impl Model {
         garbage_collector::collect_garbage(&config);
 
         Ok(Model {
-            current_screen: CurrentScreen::MailingListSelection,
+            current_screen: View::MailingListSelection,
             mailing_list_selection: MailingListSelection {
                 mailing_lists: mailing_lists.clone(),
                 target_list: String::new(),
@@ -147,10 +147,10 @@ impl Model {
         let mut acked_by = Vec::new();
 
         match &self.current_screen {
-            CurrentScreen::BookmarkedPatchsets => {
+            View::BookmarkedPatchsets => {
                 representative_patch = self.bookmarked_patchsets.get_selected_patchset();
             }
-            CurrentScreen::LatestPatchsets => {
+            View::LatestPatchsets => {
                 representative_patch = self
                     .latest_patchsets
                     .as_ref()
@@ -392,7 +392,7 @@ impl Model {
     }
 
     /// Change the current active screen in [App::current_screen].
-    pub fn set_current_screen(&mut self, new_current_screen: CurrentScreen) {
+    pub fn set_current_screen(&mut self, new_current_screen: View) {
         self.current_screen = new_current_screen;
     }
 

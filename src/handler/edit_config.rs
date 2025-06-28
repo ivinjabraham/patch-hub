@@ -1,7 +1,7 @@
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
 use crate::{
-    model::{screens::CurrentScreen, Model},
+    model::{screens::View, Model},
     ui::popup::{help::HelpPopUpBuilder, PopUp},
 };
 
@@ -35,7 +35,7 @@ pub fn handle_edit_config(model: &mut Model, key: KeyEvent) -> color_eyre::Resul
                     model.consolidate_edit_config();
                     model.config.save_patch_hub_config()?;
                     model.reset_edit_config();
-                    model.set_current_screen(CurrentScreen::MailingListSelection);
+                    model.set_current_screen(View::MailingListSelection);
                 }
                 KeyCode::Enter => {
                     edit_config_state.toggle_editing();
