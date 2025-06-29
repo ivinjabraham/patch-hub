@@ -255,7 +255,7 @@ impl Model {
                     reviewed_by,
                     tested_by,
                     acked_by,
-                    last_screen: self.current_screen.clone(),
+                    last_screen: self.current_screen,
                     lore_api_client: self.lore_api_client.clone(),
                     patchset_path,
                 });

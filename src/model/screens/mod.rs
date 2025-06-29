@@ -4,7 +4,7 @@ pub mod edit_config;
 pub mod latest;
 pub mod mail_list;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Copy, Debug, Clone, PartialEq, Eq, Hash)]
 pub enum View {
     MailingListSelection,
     BookmarkedPatchsets,

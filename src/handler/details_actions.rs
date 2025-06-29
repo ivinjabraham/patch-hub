@@ -64,7 +64,7 @@ pub fn handle_patchset_details<B: Backend>(
             model.popup = Some(popup);
         }
         KeyCode::Esc | KeyCode::Char('q') => {
-            let ps_da_clone = patchset_details_and_actions.last_screen.clone();
+            let ps_da_clone = patchset_details_and_actions.last_screen;
             model.set_current_screen(ps_da_clone);
             model.reset_details_actions();
         }
