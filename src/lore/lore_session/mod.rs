@@ -305,7 +305,7 @@ pub fn save_bookmarked_patchsets(
         fs::create_dir_all(parent)?;
     }
 
-    let tmp_filename = format!("{}.tmp", filepath);
+    let tmp_filename = format!("{filepath}.tmp");
     {
         let tmp_file = File::create(&tmp_filename)?;
         serde_json::to_writer(tmp_file, &bookmarked_patchsets)?;
@@ -390,7 +390,7 @@ pub fn save_available_lists(available_lists: &Vec<MailingList>, filepath: &str) 
         fs::create_dir_all(parent)?;
     }
 
-    let tmp_filename = format!("{}.tmp", filepath);
+    let tmp_filename = format!("{filepath}.tmp");
     {
         let tmp_file = File::create(&tmp_filename)?;
         serde_json::to_writer(tmp_file, &available_lists)?;
@@ -466,7 +466,7 @@ fn generate_patch_reply_template(patch_contents: &str) -> String {
         {
             continue;
         } else if !line.trim().is_empty() {
-            line_to_push = format!("{}\n", line);
+            line_to_push = format!("{line}\n");
         } else if line.trim().is_empty() && !reply_template.is_empty() {
             reply_template.push('\n');
             break;
@@ -477,7 +477,7 @@ fn generate_patch_reply_template(patch_contents: &str) -> String {
 
     // After processing headers, just quote-reply remaining lines
     for line in patch_lines_iterator {
-        reply_template.push_str(&format!("> {}\n", line));
+        reply_template.push_str(&format!("> {line}\n"));
     }
 
     reply_template
@@ -549,7 +549,7 @@ pub fn save_reviewed_patchsets(
         fs::create_dir_all(parent)?;
     }
 
-    let tmp_filename = format!("{}.tmp", filepath);
+    let tmp_filename = format!("{filepath}.tmp");
     {
         let tmp_file = File::create(&tmp_filename)?;
         serde_json::to_writer(tmp_file, &reviewed_patchsets)?;

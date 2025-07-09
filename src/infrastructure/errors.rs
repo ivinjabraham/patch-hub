@@ -58,7 +58,7 @@ mod tests {
         match result {
             Ok(_) => panic!("Expected an error"),
             Err(e) => {
-                let _ = format!("{:?}", e);
+                let _ = format!("{e:?}");
             }
         }
     }

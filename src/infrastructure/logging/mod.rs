@@ -109,7 +109,7 @@ impl Logger {
     /// ```
     fn log<M: Display>(&mut self, level: LogLevel, message: M) {
         let current_datetime = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
-        let message = format!("[{}] {}", current_datetime, message);
+        let message = format!("[{current_datetime}] {message}");
 
         let log = LogMessage { level, message };
 
@@ -220,11 +220,11 @@ impl Logger {
     pub fn flush() {
         let logger = Logger::get_logger();
         for entry in &logger.logs_to_print {
-            eprintln!("{}", entry);
+            eprintln!("{entry}");
         }
 
         if let Some(f) = &logger.log_filepath {
-            eprintln!("Check the full log file: {}", f);
+            eprintln!("Check the full log file: {f}");
         }
     }
 
@@ -251,7 +251,7 @@ impl Logger {
 
         if logger.latest_log_file.is_none() {
             let latest_log_filename = LATEST_LOG_FILENAME.to_string();
-            let latest_log_filepath = format!("{}/{}", logs_path, latest_log_filename);
+            let latest_log_filepath = format!("{logs_path}/{latest_log_filename}");
 
             File::create(&latest_log_filepath)?;
 
@@ -269,7 +269,7 @@ impl Logger {
                 "patch-hub_{}.log",
                 chrono::Local::now().format("%Y%m%d-%H%M%S")
             );
-            let log_filepath = format!("{}/{}", logs_path, log_filename);
+            let log_filepath = format!("{logs_path}/{log_filename}");
 
             let log_file = OpenOptions::new()
                 .create(true)

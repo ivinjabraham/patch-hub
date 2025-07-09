@@ -242,7 +242,7 @@ impl DetailsActions {
         let kernel_tree = if let Some(tree) = config.get_kernel_tree(kernel_tree_id) {
             tree
         } else {
-            return Err(format!("invalid target kernel tree '{}'", kernel_tree_id));
+            return Err(format!("invalid target kernel tree '{kernel_tree_id}'"));
         };
 
         let kernel_tree_path = Path::new(kernel_tree.path());
@@ -288,13 +288,12 @@ impl DetailsActions {
             .arg("status")
             .arg("--porcelain")
             .output()
-            .map_err(|e| format!("failed to check git status {}", e))?;
+            .map_err(|e| format!("failed to check git status {e}"))?;
 
         let status_output = String::from_utf8_lossy(&git_status_out.stdout);
         if !status_output.is_empty() {
             return Err(format!(
-                "there are staged and/or unstaged changes\n{}",
-                status_output
+                "there are staged and/or unstaged changes\n{status_output}"
             ));
         }
 
@@ -306,7 +305,7 @@ impl DetailsActions {
             .arg("--quiet")
             .arg(format!("refs/heads/{}", kernel_tree.branch()))
             .output()
-            .map_err(|e| format!("failed to verify branch: {}", e))?;
+            .map_err(|e| format!("failed to verify branch: {e}"))?;
 
         if !git_show_ref_out.status.success() {
             return Err(format!(
@@ -330,7 +329,7 @@ impl DetailsActions {
             .arg("--abbrev-ref")
             .arg("HEAD")
             .output()
-            .map_err(|e| format!("failed to get current branch: {}", e))?;
+            .map_err(|e| format!("failed to get current branch: {e}"))?;
 
         let mut branch = String::from_utf8_lossy(&original_branch.stdout).to_string();
         branch.pop();
@@ -347,7 +346,7 @@ impl DetailsActions {
             .arg("switch")
             .arg(branch)
             .output()
-            .map_err(|e| format!("failed to switch branch: {}", e))?;
+            .map_err(|e| format!("failed to switch branch: {e}"))?;
 
         if !output.status.success() {
             return Err(format!(
@@ -384,7 +383,7 @@ impl DetailsActions {
             .arg("-b")
             .arg(&target_branch_name)
             .output()
-            .map_err(|e| format!("failed to create target branch: {}", e))?;
+            .map_err(|e| format!("failed to create target branch: {e}"))?;
 
         if !output.status.success() {
             return Err(format!(
@@ -413,7 +412,7 @@ impl DetailsActions {
 
         let git_am_out = git_am_out
             .output()
-            .map_err(|e| format!("failed to execute git-am: {}", e))?;
+            .map_err(|e| format!("failed to execute git-am: {e}"))?;
 
         if !git_am_out.status.success() {
             let _ = Command::new("git")
@@ -422,7 +421,7 @@ impl DetailsActions {
                 .arg("am")
                 .arg("--abort")
                 .output()
-                .map_err(|e| format!("failed to abort git-am: {}", e));
+                .map_err(|e| format!("failed to abort git-am: {e}"));
 
             return Err(String::from_utf8_lossy(&git_am_out.stderr).to_string());
         }

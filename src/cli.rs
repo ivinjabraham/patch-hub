@@ -30,7 +30,7 @@ impl Cli {
             }
             match serde_json::to_string_pretty(&config) {
                 Err(err) => return ControlFlow::Break(Err(eyre!(err))),
-                Ok(config) => println!("patch-hub configurations:\n{}", config),
+                Ok(config) => println!("patch-hub configurations:\n{config}"),
             }
 
             return ControlFlow::Break(Ok(()));

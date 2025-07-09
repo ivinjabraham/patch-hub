@@ -46,7 +46,7 @@ impl ReviewTrailersPopUp {
         };
         let mut fill_text = |text: &mut String, authors: &HashSet<Author>| {
             for author in authors {
-                let author = format!(" - {}\n", author);
+                let author = format!(" - {author}\n");
                 text.push_str(&author);
                 update_columns(author.len());
             }

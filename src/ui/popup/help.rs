@@ -86,7 +86,7 @@ impl HelpPopUpBuilder {
             .fold(0, |acc, (k, _)| if k.len() > acc { k.len() } else { acc });
 
         let help = self.keybinds.iter().fold(String::new(), |acc, (k, v)| {
-            acc + &format!("{:>width$}: {}\n", k, v, width = key_len)
+            acc + &format!("{k:>key_len$}: {v}\n")
         });
 
         let lines = self.keybinds.len() as u16;
@@ -135,7 +135,7 @@ impl PopUp for HelpPopUp {
 
         // Push the description
         let text = if let Some(description) = &self.description {
-            format!("{}\n\n", description)
+            format!("{description}\n\n")
         } else {
             String::new()
         };
@@ -189,7 +189,7 @@ impl PopUp for HelpPopUp {
 impl Display for HelpPopUp {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if let Some(title) = &self.title {
-            write!(f, "{}", title)?;
+            write!(f, "{title}")?;
         } else {
             write!(f, "Help")?;
         }

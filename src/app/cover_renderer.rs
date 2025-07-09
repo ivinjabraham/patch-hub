@@ -68,7 +68,7 @@ fn bat_cover_renderer(patch: &str) -> color_eyre::Result<String> {
         .stdout(Stdio::piped())
         .spawn()
         .map_err(|e| {
-            Logger::error(format!("Failed to spawn bat for cover preview: {}", e));
+            Logger::error(format!("Failed to spawn bat for cover preview: {e}"));
             e
         })?;
 

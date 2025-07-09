@@ -63,8 +63,8 @@ impl Default for Config {
             eprintln!("$HOME environment variable not set, using current directory");
             ".".to_string()
         });
-        let cache_dir = format!("{}/.cache/patch_hub", home);
-        let data_dir = format!("{}/.local/share/patch_hub", home);
+        let cache_dir = format!("{home}/.cache/patch_hub");
+        let data_dir = format!("{home}/.local/share/patch_hub");
 
         Config {
             page_size: 30,
@@ -98,10 +98,10 @@ impl Config {
             match fs::read_to_string(&config_path) {
                 Ok(file_contents) => match serde_json::from_str(&file_contents) {
                     Ok(config) => return config,
-                    Err(e) => eprintln!("Failed to parse config file {}: {}", config_path, e),
+                    Err(e) => eprintln!("Failed to parse config file {config_path}: {e}"),
                 },
                 Err(e) => {
-                    eprintln!("Failed to read config file {}: {}", config_path, e)
+                    eprintln!("Failed to read config file {config_path}: {e}")
                 }
             }
         }
@@ -140,7 +140,7 @@ impl Config {
     pub fn build() -> Self {
         let mut config = Self::load_file();
         config.save_patch_hub_config().unwrap_or_else(|e| {
-            eprintln!("Failed to save default config: {}", e);
+            eprintln!("Failed to save default config: {e}");
         });
         config.override_with_env_vars();
 

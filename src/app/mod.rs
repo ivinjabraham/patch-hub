@@ -233,7 +233,7 @@ impl App {
                         };
 
                     patches_preview
-                        .push(format!("{}---\n{}", rendered_cover, rendered_patch).into_text()?);
+                        .push(format!("{rendered_cover}---\n{rendered_patch}").into_text()?);
                 }
                 let has_cover_letter = representative_patch.number_in_series() == 0;
                 let patches_to_reply = vec![false; raw_patches.len()];

@@ -436,9 +436,7 @@ fn should_extract_git_reply_command_from_patch_html() {
 
     assert!(
         commands_eq(&expected_git_reply_command, &git_reply_command),
-        "Wrong git reply command\nExpected:{:?}\n  Actual:{:?}",
-        expected_git_reply_command,
-        git_reply_command
+        "Wrong git reply command\nExpected:{expected_git_reply_command:?}\n  Actual:{git_reply_command:?}"
     );
 }
 
@@ -521,7 +519,7 @@ fn should_prepare_reply_patchset_with_reviewed_by() {
     })
     .times(4)
     .returning(|_, message_id| {
-        Ok(format!("git-send-email(1): git send-email --in-reply-to={} --to=foo@bar.foo.bar /path/to/YOUR_REPLY", message_id))
+        Ok(format!("git-send-email(1): git send-email --in-reply-to={message_id} --to=foo@bar.foo.bar /path/to/YOUR_REPLY"))
     });
 
     let patches = vec![
@@ -556,16 +554,13 @@ fn should_prepare_reply_patchset_with_reviewed_by() {
     {
         assert!(
             commands_eq(expected, actual),
-            "Wrong git reply command\nExpected:{:?}\n  Actual:{:?}",
-            expected,
-            actual
+            "Wrong git reply command\nExpected:{expected:?}\n  Actual:{actual:?}"
         );
     }
 
     for i in 0..=3 {
         let expected_path = format!(
-            "test_samples/lore_session/prepare_reply_w_reviewed_by/expected_patch_{}-reply.mbx",
-            i
+            "test_samples/lore_session/prepare_reply_w_reviewed_by/expected_patch_{i}-reply.mbx"
         );
         let actual_path = format!(
             "{}/1234.567-{}-foo@bar.foo.bar-reply.mbx",
