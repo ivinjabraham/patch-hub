@@ -5,6 +5,7 @@ use thiserror::Error;
 
 use std::{
     collections::{HashMap, HashSet},
+    ffi::OsStr,
     fs::{self, File},
     io::{self, BufRead, BufReader},
     mem::swap,
@@ -23,6 +24,13 @@ use crate::lore::{
 mod tests;
 
 const LORE_PAGE_SIZE: usize = 200;
+
+/// This enum is used to signal callers when `b4` succeeded/failed to fetch a
+/// patchset
+pub enum B4Result {
+    PatchFound(String),
+    PatchNotFound(String),
+}
 
 #[derive(Getters)]
 pub struct LoreSession {
@@ -153,17 +161,20 @@ impl LoreSession {
     }
 }
 
-pub fn download_patchset(output_dir: &str, patch: &Patch) -> io::Result<String> {
+pub fn download_patchset(output_dir: &str, patch: &Patch) -> B4Result {
     let message_id: &str = &patch.message_id().href;
     let mbox_name: String = extract_mbox_name_from_message_id(message_id);
 
     if !Path::new(output_dir).exists() {
-        fs::create_dir_all(output_dir)?;
+        match fs::create_dir_all(output_dir) {
+            Ok(_) => {}
+            Err(_) => return B4Result::PatchNotFound("Couldn't create patches dir.".to_string()),
+        };
     }
 
     let filepath: String = format!("{output_dir}/{mbox_name}");
     if !Path::new(&filepath).exists() {
-        Command::new("b4")
+        match Command::new("b4")
             .arg("--quiet")
             .arg("am")
             .arg("--use-version")
@@ -175,10 +186,22 @@ pub fn download_patchset(output_dir: &str, patch: &Patch) -> io::Result<String> 
             .arg(&mbox_name)
             .stdout(Stdio::null())
             .stderr(Stdio::null())
-            .status()?;
+            .status()
+        {
+            Ok(_) => {}
+            Err(_) => {
+                return B4Result::PatchNotFound("b4 couldn't fetch patchset file.".to_string())
+            }
+        };
     }
 
-    Ok(filepath)
+    let path = Path::new(OsStr::new(&filepath));
+
+    if path.exists() {
+        B4Result::PatchFound(filepath)
+    } else {
+        B4Result::PatchNotFound("b4 couldn't fetch patchset file.".to_string())
+    }
 }
 
 fn extract_mbox_name_from_message_id(message_id: &str) -> String {

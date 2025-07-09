@@ -9,7 +9,8 @@ use std::ops::ControlFlow;
 use crate::{
     app::{screens::CurrentScreen, App},
     loading_screen,
-    ui::popup::{help::HelpPopUpBuilder, PopUp},
+    lore::lore_session::B4Result,
+    ui::popup::{help::HelpPopUpBuilder, info_popup::InfoPopUp, PopUp},
 };
 
 pub fn handle_bookmarked_patchsets<B>(
@@ -41,9 +42,23 @@ where
                 "Loading patchset" => {
                     let result = app.init_details_actions();
                     if result.is_ok() {
-                        app.set_current_screen(CurrentScreen::PatchsetDetails);
+                        // If a patchset has been bookmarked UI, this means that
+                        // b4 was successful in fetching it, so it shouldn't be
+                        // necessary to handle this, but we can't assume that a
+                        // patchset in this list was bookmarked through the UI
+                        match result.unwrap() {
+                            B4Result::PatchFound(_) => {
+                                app.set_current_screen(CurrentScreen::PatchsetDetails);
+                            }
+                            B4Result::PatchNotFound(err_cause) => {
+                                app.popup = Some(InfoPopUp::generate_info_popup(
+                                    "Error",&format!("The selected patchset couldn't be retrieved.\nReason: {err_cause}\nPlease choose another patchset.")
+                                ));
+                                app.set_current_screen(CurrentScreen::BookmarkedPatchsets);
+                            }
+                        }
                     }
-                    result
+                    color_eyre::eyre::Ok(())
                 }
             };
         }

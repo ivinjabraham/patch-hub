@@ -9,7 +9,8 @@ use std::ops::ControlFlow;
 use crate::{
     app::{screens::CurrentScreen, App},
     loading_screen,
-    ui::popup::{help::HelpPopUpBuilder, PopUp},
+    lore::lore_session::B4Result,
+    ui::popup::{help::HelpPopUpBuilder, info_popup::InfoPopUp, PopUp},
 };
 
 pub fn handle_latest_patchsets<B>(
@@ -56,9 +57,19 @@ where
                 "Loading patchset" => {
                     let result = app.init_details_actions();
                     if result.is_ok() {
-                        app.set_current_screen(CurrentScreen::PatchsetDetails);
+                        match result.unwrap() {
+                            B4Result::PatchFound(_) => {
+                                app.set_current_screen(CurrentScreen::PatchsetDetails);
+                            }
+                            B4Result::PatchNotFound(err_cause) => {
+                                app.popup = Some(InfoPopUp::generate_info_popup(
+                                    "Error",&format!("The selected patchset couldn't be retrieved.\nReason: {err_cause}\nPlease choose another patchset.")
+                                ));
+                                app.set_current_screen(CurrentScreen::LatestPatchsets);
+                            }
+                        }
                     }
-                    result
+                    color_eyre::eyre::Ok(())
                 }
             };
         }
