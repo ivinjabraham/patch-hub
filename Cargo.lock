@@ -775,7 +775,7 @@ dependencies = [
  "derive-getters",
  "lazy_static",
  "mockall",
- "proc_macros",
+ "patch-hub-proc-macros",
  "ratatui",
  "regex",
  "serde",
@@ -784,6 +784,19 @@ dependencies = [
  "thiserror 2.0.12",
  "ureq",
  "which",
+]
+
+[[package]]
+name = "patch-hub-proc-macros"
+version = "0.1.0"
+dependencies = [
+ "derive-getters",
+ "lazy_static",
+ "proc-macro2",
+ "quote",
+ "serde",
+ "serde_json",
+ "syn",
 ]
 
 [[package]]
@@ -831,19 +844,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778"
 dependencies = [
  "unicode-ident",
-]
-
-[[package]]
-name = "proc_macros"
-version = "0.1.0"
-dependencies = [
- "derive-getters",
- "lazy_static",
- "proc-macro2",
- "quote",
- "serde",
- "serde_json",
- "syn",
 ]
 
 [[package]]

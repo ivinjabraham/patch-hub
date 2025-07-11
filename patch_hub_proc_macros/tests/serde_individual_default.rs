@@ -1,4 +1,4 @@
-use proc_macros::serde_individual_default;
+use patch_hub_proc_macros::serde_individual_default;
 
 use derive_getters::Getters;
 use serde::Serialize;
