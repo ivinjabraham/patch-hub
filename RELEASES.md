@@ -1,3 +1,40 @@
+# Version 0.1.7 (2025-07-11)
+
+Not the slowest nor the fastest release of `patch-hub`, but, here it is, version 0.1.7! The main goal of this release is because we will be publishing `patch-hub` to crates.io.
+
+### New Functionalities and Changes Highlight
+
+1. Some great refactorings to prepare for the rearchitecture of the project (thanks @ivinjabraham)
+2. Fix the annoying crashing bug of a patchset that could not be found by `b4` (thanks @ArthurPilone, and welcome)
+3. Bump of many dependencies and adapting as a result (thanks @dependabot)
+4. Prepare for publishing `patch-hub` to crates.io
+
+### Problems and Future Changes
+
+Mainly, we need to push for the rearchitecture (as mentioned in the last few releases).
+
+### Changelog
+
+```git
+b44de94 2025-04-25 | refactor: introduce infrastructure layer [Ivin Joel Abraham]ac9e741 2025-04-25 | fix!: remove `lore` from being a public module [Ivin Joel Abraham]
+d8e29a7 2025-04-25 | refactor: use mod.rs to clean up directory structure [Ivin Joel Abraham]
+97296ed 2025-05-27 | refactor(app): enforce `mod.rs` style to `app::{screens,config}` [David Tadokoro]
+4227bde 2025-05-27 | refactor(lore): enforce `mod.rs` style to `lore` [David Tadokoro]
+a760ea5 2025-05-27 | refactor(ui): enforce `mod.rs` style to `ui::popup` [David Tadokoro]
+5f84201 2025-05-17 | docs: add info about breaking changes and scope in CONTRIBUTING.md [Ivin Joel Abraham]
+24def19 2025-05-16 | chore(deps): bump the version-updates group with 8 updates [dependabot[bot]]
+6554dd8 2025-05-27 | chore(deps): Bump clap in the version-updates group across 1 directory [dependabot[bot]]
+d1d7d71 2025-07-09 | fix: check in download_patchset if patch exists at expected path [Arthur Pilone]
+eaff866 2025-07-09 | chore: enforce `clippy` 0.1.88 new rules [David Tadokoro]
+4b1b219 2025-06-29 | refactor: move dependecy check out of `run_app` [Ivin Joel Abraham]
+66e2409 2025-07-01 | chore(deps): Bump the version-updates group across 1 directory with 6 updates [dependabot[bot]]
+12b57e9 2025-07-11 | chore(Cargo.toml): add `package::license` subsection [David Tadokoro]
+cb3a983 2025-07-11 | chore(Cargo.toml): add `package::readme` subsection [David Tadokoro]
+c7ac1f3 2025-07-11 | style(patch-hub-proc-macros): rename crate `proc-macros` for `patch-hub-proc-macros` [David Tadokoro]
+4ff7c04 2025-07-11 | chore(patch-hub-proc-macros): add `package::{description,license}` fields to crate [David Tadokoro]
+b6856a3 2025-07-11 | chore(Cargo.toml): replace local workspace import of `patch-hub-proc-macros` [David Tadokoro]
+```
+
 # Version 0.1.6 (2025-05-16)
 
 After almost three months, a new release of `patch-hub` is here! We had a couple of new contributors who participated in this development cycle. Welcome @lucasoshiro and @ivinjabraham!
