@@ -775,7 +775,7 @@ dependencies = [
  "derive-getters",
  "lazy_static",
  "mockall",
- "patch-hub-proc-macros",
+ "patch-hub-proc-macros 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "ratatui",
  "regex",
  "serde",
@@ -789,6 +789,21 @@ dependencies = [
 [[package]]
 name = "patch-hub-proc-macros"
 version = "0.1.0"
+dependencies = [
+ "derive-getters",
+ "lazy_static",
+ "proc-macro2",
+ "quote",
+ "serde",
+ "serde_json",
+ "syn",
+]
+
+[[package]]
+name = "patch-hub-proc-macros"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0b0e1e93b25b6fe1f7c85780dc59d05f58d259f7c9c2cba60347ff3e94ccc7de"
 dependencies = [
  "derive-getters",
  "lazy_static",
