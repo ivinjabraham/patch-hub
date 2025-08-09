@@ -1,5 +1,3 @@
-mod mailing_list_viewmodel;
-
 use ratatui::crossterm::event::KeyEvent;
 #[allow(dead_code)]
 pub trait ViewModel {

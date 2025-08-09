@@ -1,3 +1,4 @@
+mod app;
 mod cli;
 mod handler;
 mod infrastructure;
@@ -5,6 +6,7 @@ mod lore;
 mod macros;
 mod model;
 mod ui;
+mod viewmodels;
 
 use clap::Parser;
 use cli::Cli;
