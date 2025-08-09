@@ -31,7 +31,7 @@ where
         }
         KeyCode::Esc | KeyCode::Char('q') => {
             model.bookmarked_patchsets.patchset_index = 0;
-            model.set_current_screen(View::MailingListSelection);
+            model.set_current_screen(View::MailingLists);
         }
         KeyCode::Char('j') | KeyCode::Down => {
             model.bookmarked_patchsets.select_below_patchset();

@@ -33,7 +33,7 @@ where
         }
         KeyCode::Esc | KeyCode::Char('q') => {
             model.reset_latest_patchsets();
-            model.set_current_screen(View::MailingListSelection);
+            model.set_current_screen(View::MailingLists);
         }
         KeyCode::Char('j') | KeyCode::Down => {
             latest_patchsets.select_below_patchset();

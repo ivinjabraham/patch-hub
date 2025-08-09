@@ -21,7 +21,7 @@ use crate::viewmodels::ViewModelState;
 
 #[derive(Copy, Debug, Clone, PartialEq, Eq, Hash)]
 pub enum View {
-    MailingListSelection,
+    MailingLists,
     BookmarkedPatchsets,
     LatestPatchsets,
     PatchsetDetails,
@@ -32,7 +32,7 @@ impl View {
     #[allow(dead_code, unused_variables)]
     pub fn draw_screen(&self, state: ViewModelState) {
         match self {
-            View::MailingListSelection => todo!(),
+            View::MailingLists => todo!(),
             View::BookmarkedPatchsets => todo!(),
             View::LatestPatchsets => todo!(),
             View::PatchsetDetails => todo!(),
@@ -56,7 +56,7 @@ pub fn draw_ui(f: &mut Frame, model: &Model) {
     render_title(f, chunks[0]);
 
     match model.current_screen {
-        View::MailingListSelection => mail_list::render_main(f, model, chunks[1]),
+        View::MailingLists => mail_list::render_main(f, model, chunks[1]),
         View::BookmarkedPatchsets => {
             bookmarked::render_main(f, &model.bookmarked_patchsets, chunks[1])
         }

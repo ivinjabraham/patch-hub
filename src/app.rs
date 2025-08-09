@@ -18,7 +18,7 @@ impl App {
     pub fn new(model: Model) -> color_eyre::Result<Self> {
         Ok(App {
             model,
-            current_view: View::MailingListSelection,
+            current_view: View::MailingLists,
             viewmodels: HashMap::new(),
         })
     }
@@ -33,7 +33,7 @@ impl App {
         self.viewmodels
             .entry(self.current_view)
             .or_insert_with(|| match self.current_view {
-                View::MailingListSelection => {
+                View::MailingLists => {
                     todo!()
                 }
                 View::BookmarkedPatchsets => {

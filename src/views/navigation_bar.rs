@@ -11,7 +11,7 @@ use super::{bookmarked, details_actions, edit_config, latest, mail_list};
 
 pub fn render(f: &mut Frame, model: &Model, chunk: Rect) {
     let mode_footer_text = match model.current_screen {
-        View::MailingListSelection => mail_list::mode_footer_text(model),
+        View::MailingLists => mail_list::mode_footer_text(model),
         View::BookmarkedPatchsets => bookmarked::mode_footer_text(),
         View::LatestPatchsets => latest::mode_footer_text(model),
         View::PatchsetDetails => details_actions::mode_footer_text(),
@@ -23,7 +23,7 @@ pub fn render(f: &mut Frame, model: &Model, chunk: Rect) {
 
     let current_keys_hint = {
         match model.current_screen {
-            View::MailingListSelection => mail_list::keys_hint(),
+            View::MailingLists => mail_list::keys_hint(),
             View::BookmarkedPatchsets => bookmarked::keys_hint(),
             View::LatestPatchsets => latest::keys_hint(),
             View::PatchsetDetails => details_actions::keys_hint(),

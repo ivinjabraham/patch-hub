@@ -38,7 +38,7 @@ pub fn handle_edit_config(model: &mut Model, key: KeyEvent) -> color_eyre::Resul
                     model.consolidate_edit_config();
                     model.config.save_patch_hub_config()?;
                     model.reset_edit_config();
-                    model.set_current_screen(View::MailingListSelection);
+                    model.set_current_screen(View::MailingLists);
                 }
                 KeyCode::Enter => {
                     edit_config_state.toggle_editing();

@@ -87,7 +87,7 @@ impl Model {
         garbage_collector::collect_garbage(&config);
 
         Ok(Model {
-            current_screen: View::MailingListSelection,
+            current_screen: View::MailingLists,
             mailing_list_selection: MailingListSelection {
                 mailing_lists: mailing_lists.clone(),
                 target_list: String::new(),

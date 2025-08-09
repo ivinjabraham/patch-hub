@@ -43,7 +43,7 @@ where
         }
     } else {
         match model.current_screen {
-            View::MailingListSelection => {
+            View::MailingLists => {
                 return handle_mailing_list_selection(model, key, terminal);
             }
             View::BookmarkedPatchsets => {
@@ -71,7 +71,7 @@ where
     B: Backend + Send + 'static,
 {
     match model.current_screen {
-        View::MailingListSelection => {
+        View::MailingLists => {
             if model.mailing_list_selection.mailing_lists.is_empty() {
                 terminal = loading_screen! {
                     terminal, "Fetching mailing lists" => {
@@ -96,7 +96,7 @@ where
         }
         View::BookmarkedPatchsets => {
             if model.bookmarked_patchsets.bookmarked_patchsets.is_empty() {
-                model.set_current_screen(View::MailingListSelection);
+                model.set_current_screen(View::MailingLists);
             }
         }
         _ => {}
