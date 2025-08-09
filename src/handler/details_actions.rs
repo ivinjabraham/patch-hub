@@ -8,8 +8,11 @@ use std::time::Duration;
 
 use crate::{
     infrastructure::terminal::{setup_user_io, teardown_user_io},
-    model::{screens::View, Model},
-    views::popup::{help::HelpPopUpBuilder, review_trailers::ReviewTrailersPopUp, PopUp},
+    model::Model,
+    views::{
+        popup::{help::HelpPopUpBuilder, review_trailers::ReviewTrailersPopUp, PopUp},
+        View,
+    },
 };
 
 use super::wait_key_press;

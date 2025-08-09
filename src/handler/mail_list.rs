@@ -1,3 +1,4 @@
+use crate::views::View;
 use ratatui::{
     crossterm::event::{KeyCode, KeyEvent},
     prelude::Backend,
@@ -8,7 +9,7 @@ use std::ops::ControlFlow;
 
 use crate::{
     loading_screen,
-    model::{screens::View, Model},
+    model::Model,
     views::popup::{help::HelpPopUpBuilder, PopUp},
 };
 

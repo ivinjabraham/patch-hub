@@ -5,7 +5,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::model::{screens::View, Model};
+use crate::{model::Model, views::View};
 
 use super::{bookmarked, details_actions, edit_config, latest, mail_list};
 

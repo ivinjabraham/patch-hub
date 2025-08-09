@@ -9,8 +9,11 @@ use std::ops::ControlFlow;
 use crate::{
     loading_screen,
     lore::lore_session::B4Result,
-    model::{screens::View, Model},
-    views::popup::{help::HelpPopUpBuilder, info_popup::InfoPopUp, PopUp},
+    model::Model,
+    views::{
+        popup::{help::HelpPopUpBuilder, info_popup::InfoPopUp, PopUp},
+        View,
+    },
 };
 
 pub fn handle_bookmarked_patchsets<B>(

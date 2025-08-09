@@ -17,7 +17,10 @@ use crate::{
         lore_session::{self, B4Result},
         patch::{Author, Patch},
     },
-    views::popup::{info_popup::InfoPopUp, PopUp},
+    views::{
+        popup::{info_popup::InfoPopUp, PopUp},
+        View,
+    },
 };
 
 use config::Config;
@@ -29,7 +32,6 @@ use screens::{
     edit_config::EditConfig,
     latest::LatestPatchsets,
     mail_list::MailingListSelection,
-    View,
 };
 
 /// Type that represents the overall state of the application. It can be viewed

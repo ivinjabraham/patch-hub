@@ -15,8 +15,31 @@ use ratatui::{
     Frame,
 };
 
-use crate::model::{screens::View, Model};
+use crate::model::Model;
 
+use crate::viewmodels::ViewModelState;
+
+#[derive(Copy, Debug, Clone, PartialEq, Eq, Hash)]
+pub enum View {
+    MailingListSelection,
+    BookmarkedPatchsets,
+    LatestPatchsets,
+    PatchsetDetails,
+    EditConfig,
+}
+
+impl View {
+    #[allow(dead_code, unused_variables)]
+    pub fn draw_screen(&self, state: ViewModelState) {
+        match self {
+            View::MailingListSelection => todo!(),
+            View::BookmarkedPatchsets => todo!(),
+            View::LatestPatchsets => todo!(),
+            View::PatchsetDetails => todo!(),
+            View::EditConfig => todo!(),
+        }
+    }
+}
 pub fn draw_ui(f: &mut Frame, model: &Model) {
     // Clear the whole screen for sanitizing reasons
     f.render_widget(Clear, f.area());

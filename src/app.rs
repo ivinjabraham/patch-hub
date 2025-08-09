@@ -1,10 +1,10 @@
-use crate::viewmodels::ViewModel;
+use crate::{viewmodels::ViewModel, views::View};
 use std::collections::HashMap;
 
 use color_eyre::eyre::Result;
 use ratatui::crossterm::event::{self, Event, KeyEventKind};
 
-use crate::model::{screens::View, Model};
+use crate::model::Model;
 
 #[allow(dead_code)]
 pub struct App {

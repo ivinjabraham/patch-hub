@@ -14,9 +14,8 @@ use crate::{
         patch::{Author, Patch},
     },
     model::config::{Config, KernelTree},
+    views::View,
 };
-
-use super::View;
 
 pub struct DetailsActions {
     pub representative_patch: Patch,
