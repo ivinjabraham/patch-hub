@@ -55,7 +55,7 @@ impl App {
     pub fn run(&mut self) -> Result<()> {
         loop {
             self.get_current_view()
-                .draw_screen(self.get_current_viewmodel().state());
+                .draw_screen(&self.get_current_viewmodel().state());
 
             if let Event::Key(key) = event::read()? {
                 if key.kind == KeyEventKind::Release {

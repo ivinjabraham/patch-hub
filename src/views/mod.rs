@@ -30,7 +30,7 @@ pub enum View {
 
 impl View {
     #[allow(dead_code, unused_variables)]
-    pub fn draw_screen(&self, state: ViewModelState) {
+    pub fn draw_screen(&self, state: &ViewModelState) {
         match self {
             View::MailingLists => todo!(),
             View::BookmarkedPatchsets => todo!(),
