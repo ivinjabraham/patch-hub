@@ -1,3 +1,5 @@
+use crate::viewmodels::ViewModelState;
+
 pub mod bookmarked;
 pub mod details_actions;
 pub mod edit_config;
@@ -14,8 +16,8 @@ pub enum View {
 }
 
 impl View {
-    #[allow(dead_code)]
-    pub fn draw_screen(&self) {
+    #[allow(dead_code, unused_variables)]
+    pub fn draw_screen(&self, state: ViewModelState) {
         match self {
             View::MailingListSelection => todo!(),
             View::BookmarkedPatchsets => todo!(),

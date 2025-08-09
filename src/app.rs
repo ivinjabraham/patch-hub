@@ -51,10 +51,11 @@ impl App {
             })
     }
 
-    #[allow(dead_code)]
+    #[allow(dead_code, unreachable_code)]
     pub fn run(&mut self) -> Result<()> {
         loop {
-            self.get_current_view().draw_screen();
+            self.get_current_view()
+                .draw_screen(self.get_current_viewmodel().state());
 
             if let Event::Key(key) = event::read()? {
                 if key.kind == KeyEventKind::Release {
