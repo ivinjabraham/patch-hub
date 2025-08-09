@@ -17,7 +17,7 @@ use crate::{
         lore_session::{self, B4Result},
         patch::{Author, Patch},
     },
-    ui::popup::{info_popup::InfoPopUp, PopUp},
+    views::popup::{info_popup::InfoPopUp, PopUp},
 };
 
 use config::Config;

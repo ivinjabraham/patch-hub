@@ -2,7 +2,7 @@ use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
 use crate::{
     model::{screens::View, Model},
-    ui::popup::{help::HelpPopUpBuilder, PopUp},
+    views::popup::{help::HelpPopUpBuilder, PopUp},
 };
 
 pub fn handle_edit_config(model: &mut Model, key: KeyEvent) -> color_eyre::Result<()> {

@@ -9,7 +9,7 @@ use std::time::Duration;
 use crate::{
     infrastructure::terminal::{setup_user_io, teardown_user_io},
     model::{screens::View, Model},
-    ui::popup::{help::HelpPopUpBuilder, review_trailers::ReviewTrailersPopUp, PopUp},
+    views::popup::{help::HelpPopUpBuilder, review_trailers::ReviewTrailersPopUp, PopUp},
 };
 
 use super::wait_key_press;

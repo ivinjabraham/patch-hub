@@ -5,8 +5,8 @@ mod infrastructure;
 mod lore;
 mod macros;
 mod model;
-mod ui;
 mod viewmodels;
+mod views;
 
 use clap::Parser;
 use cli::Cli;

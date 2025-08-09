@@ -9,7 +9,7 @@ use std::ops::ControlFlow;
 use crate::{
     loading_screen,
     model::{screens::View, Model},
-    ui::popup::{help::HelpPopUpBuilder, PopUp},
+    views::popup::{help::HelpPopUpBuilder, PopUp},
 };
 
 pub fn handle_mailing_list_selection<B>(

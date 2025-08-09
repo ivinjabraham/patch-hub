@@ -10,7 +10,7 @@ use crate::{
     loading_screen,
     lore::lore_session::B4Result,
     model::{screens::View, Model},
-    ui::popup::{help::HelpPopUpBuilder, info_popup::InfoPopUp, PopUp},
+    views::popup::{help::HelpPopUpBuilder, info_popup::InfoPopUp, PopUp},
 };
 
 pub fn handle_bookmarked_patchsets<B>(

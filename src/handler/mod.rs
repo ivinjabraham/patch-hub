@@ -18,7 +18,7 @@ use std::{
 use crate::{
     loading_screen,
     model::{screens::View, Model},
-    ui::draw_ui,
+    views::draw_ui,
 };
 
 use bookmarked::handle_bookmarked_patchsets;
