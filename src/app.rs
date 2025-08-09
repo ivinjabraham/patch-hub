@@ -1,4 +1,4 @@
-use crate::{viewmodels::ViewModel, views::View};
+use crate::{infrastructure::terminal::Tui, viewmodels::ViewModel, views::View};
 use std::collections::HashMap;
 
 use color_eyre::eyre::Result;
@@ -11,15 +11,17 @@ pub struct App {
     model: Model,
     current_view: View,
     viewmodels: HashMap<View, Box<dyn ViewModel>>,
+    terminal: Tui,
 }
 
 impl App {
     #[allow(dead_code)]
-    pub fn new(model: Model) -> color_eyre::Result<Self> {
+    pub fn new(model: Model, terminal: Tui) -> color_eyre::Result<Self> {
         Ok(App {
             model,
             current_view: View::MailingLists,
             viewmodels: HashMap::new(),
+            terminal,
         })
     }
 
@@ -51,11 +53,12 @@ impl App {
             })
     }
 
-    #[allow(dead_code, unreachable_code)]
+    #[allow(dead_code, unreachable_code, unused_variables)]
     pub fn run(&mut self) -> Result<()> {
         loop {
-            self.get_current_view()
-                .draw_screen(&self.get_current_viewmodel().state());
+            let state = &self.get_current_viewmodel().state();
+            let current_view = self.get_current_view();
+            current_view.draw_screen(&mut self.terminal, state);
 
             if let Event::Key(key) = event::read()? {
                 if key.kind == KeyEventKind::Release {

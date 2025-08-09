@@ -15,7 +15,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::model::Model;
+use crate::{infrastructure::terminal::Tui, model::Model};
 
 use crate::viewmodels::ViewModelState;
 
@@ -30,7 +30,7 @@ pub enum View {
 
 impl View {
     #[allow(dead_code, unused_variables)]
-    pub fn draw_screen(&self, state: &ViewModelState) {
+    pub fn draw_screen(&self, terminal: &mut Tui, state: &ViewModelState) {
         match self {
             View::MailingLists => todo!(),
             View::BookmarkedPatchsets => todo!(),
@@ -40,6 +40,7 @@ impl View {
         }
     }
 }
+
 pub fn draw_ui(f: &mut Frame, model: &Model) {
     // Clear the whole screen for sanitizing reasons
     f.render_widget(Clear, f.area());
