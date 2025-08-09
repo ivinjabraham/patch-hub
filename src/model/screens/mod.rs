@@ -12,3 +12,16 @@ pub enum View {
     PatchsetDetails,
     EditConfig,
 }
+
+impl View {
+    #[allow(dead_code)]
+    pub fn draw_screen(&self) {
+        match self {
+            View::MailingListSelection => todo!(),
+            View::BookmarkedPatchsets => todo!(),
+            View::LatestPatchsets => todo!(),
+            View::PatchsetDetails => todo!(),
+            View::EditConfig => todo!(),
+        }
+    }
+}
