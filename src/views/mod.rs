@@ -6,6 +6,9 @@ pub mod loading_screen;
 mod mail_list;
 mod navigation_bar;
 pub mod popup;
+mod widgets;
+
+use std::rc::Rc;
 
 use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout, Rect},
@@ -30,14 +33,94 @@ pub enum View {
 
 impl View {
     #[allow(dead_code, unused_variables)]
-    pub fn draw_screen(&self, terminal: &mut Tui, state: &ViewModelState) {
-        match self {
-            View::MailingLists => todo!(),
-            View::BookmarkedPatchsets => todo!(),
-            View::LatestPatchsets => todo!(),
-            View::PatchsetDetails => todo!(),
-            View::EditConfig => todo!(),
-        }
+    pub fn render_screen(
+        &self,
+        terminal: &mut Tui,
+        state: &ViewModelState,
+    ) -> color_eyre::Result<()> {
+        terminal.draw(|frame| {
+            View::clear_frame(frame);
+
+            let main_layout = View::main_layout();
+            let main_layout_chunks = View::chunk_layout(&main_layout, frame);
+
+            View::render_title_on_chunk(frame, main_layout_chunks[0]);
+            self.render_main_content(frame, state, main_layout_chunks[1]);
+
+            let footer_layout = View::footer_layout();
+            let footer_layout_chunks = View::chunk_layout(&footer_layout, frame);
+            self.render_navigation_bar(frame, state, footer_layout_chunks);
+        })?;
+
+        Ok(())
+    }
+
+    fn render_navigation_bar(&self, frame: &mut Frame, state: &ViewModelState, chunk: Rc<[Rect]>) {
+        match (self, state) {
+            (View::MailingLists, ViewModelState::MailingLists(s)) => {
+                mail_list::render_navigation_bar(frame, s, chunk)
+            }
+            (View::BookmarkedPatchsets, _) => todo!(),
+            (View::LatestPatchsets, _) => todo!(),
+            (View::PatchsetDetails, _) => todo!(),
+            (View::EditConfig, _) => todo!(),
+            _ => todo!(),
+        };
+    }
+
+    fn render_main_content(&self, frame: &mut Frame, state: &ViewModelState, chunk: Rect) {
+        match (self, state) {
+            (View::MailingLists, ViewModelState::MailingLists(s)) => {
+                mail_list::render_main_content(frame, s, chunk)
+            }
+            (View::BookmarkedPatchsets, _) => todo!(),
+            (View::LatestPatchsets, _) => todo!(),
+            (View::PatchsetDetails, _) => todo!(),
+            (View::EditConfig, _) => todo!(),
+            _ => todo!(),
+        };
+    }
+
+    fn render_title_on_chunk(frame: &mut Frame, chunk: Rect) {
+        let title_block = Block::default()
+            .borders(Borders::ALL)
+            .style(Style::default())
+            .title_alignment(Alignment::Center);
+
+        let title_content: String = "patch-hub".to_string();
+
+        let title = Paragraph::new(Text::styled(
+            title_content,
+            Style::default().fg(Color::Green).bold(),
+        ))
+        .centered()
+        .block(title_block);
+
+        frame.render_widget(title, chunk);
+    }
+
+    fn clear_frame(frame: &mut Frame) {
+        frame.render_widget(Clear, frame.area());
+    }
+
+    fn main_layout() -> Layout {
+        Layout::default()
+            .direction(Direction::Vertical)
+            .constraints([
+                Constraint::Length(3),
+                Constraint::Min(1),
+                Constraint::Length(3),
+            ])
+    }
+
+    fn footer_layout() -> Layout {
+        Layout::default()
+            .direction(Direction::Horizontal)
+            .constraints([Constraint::Percentage(30), Constraint::Percentage(80)])
+    }
+
+    fn chunk_layout(layout: &Layout, frame: &mut Frame) -> Rc<[Rect]> {
+        layout.split(frame.area())
     }
 }
 
@@ -54,8 +137,7 @@ pub fn draw_ui(f: &mut Frame, model: &Model) {
         ])
         .split(f.area());
 
-    render_title(f, chunks[0]);
-
+    View::render_title_on_chunk(f, chunks[0]);
     match model.current_screen {
         View::MailingLists => mail_list::render_main(f, model, chunks[1]),
         View::BookmarkedPatchsets => {
@@ -73,24 +155,6 @@ pub fn draw_ui(f: &mut Frame, model: &Model) {
         let rect = centered_rect(x, y, f.area());
         p.render(f, rect);
     });
-}
-
-fn render_title(f: &mut Frame, chunk: Rect) {
-    let title_block = Block::default()
-        .borders(Borders::ALL)
-        .style(Style::default())
-        .title_alignment(Alignment::Center);
-
-    let title_content: String = "patch-hub".to_string();
-
-    let title = Paragraph::new(Text::styled(
-        title_content,
-        Style::default().fg(Color::Green).bold(),
-    ))
-    .centered()
-    .block(title_block);
-
-    f.render_widget(title, chunk);
 }
 
 /// helper function to create a centered rect using up certain percentage of the available rect `r`

@@ -23,7 +23,7 @@ pub fn render(f: &mut Frame, model: &Model, chunk: Rect) {
 
     let current_keys_hint = {
         match model.current_screen {
-            View::MailingLists => mail_list::keys_hint(),
+            View::MailingLists => mail_list::keys_hint_text(),
             View::BookmarkedPatchsets => bookmarked::keys_hint(),
             View::LatestPatchsets => latest::keys_hint(),
             View::PatchsetDetails => details_actions::keys_hint(),
